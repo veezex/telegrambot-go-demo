@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package api.v2;
+option go_package = "gitlab.ozon.dev/veezex/homework/pkg/api/v2;api";
+
+import "google/api/annotations.proto";
+
+service AppleService {
+  rpc AppleGet(AppleGetRequest) returns (AppleGetResponse) {
+    option (google.api.http) = {
+      get: "/v2/apple"
+    };
+  }
+
+  rpc AppleList(AppleListRequest) returns (AppleListResponse) {
+    option (google.api.http) = {
+      get: "/v2/apples"
+    };
+  }
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// AppleGet endpoint messages
+// ---------------------------------------------------------------------------------------------------------------------
+
+message AppleGetRequest {
+  uint64 id = 1;
+}
+message AppleGetResponse {
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// AppleList endpoint messages
+// ---------------------------------------------------------------------------------------------------------------------
+
+message AppleListRequest {
+  SortOrder order = 1;
+  uint64 offset = 2;
+  uint64 limit = 3;
+}
+message AppleListResponse {
+}
+
+// enums
+enum SortOrder {
+  UNSPECIFIED = 0;
+  SORT_ORDER_ASC = 1;
+  SORT_ORDER_DESC = 2;
+}

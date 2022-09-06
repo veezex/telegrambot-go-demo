@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package api.v1;
+option go_package = "gitlab.ozon.dev/veezex/homework/pkg/api/v1;api";
+
+import "google/api/annotations.proto";
+
+service AppleService {
+  rpc AppleCreate(AppleCreateRequest) returns (AppleCreateResponse) {
+    option (google.api.http) = {
+      post: "/v1/apple/create"
+      body: "*"
+    };
+  }
+
+  rpc AppleGet(AppleGetRequest) returns (AppleGetResponse) {
+    option (google.api.http) = {
+      get: "/v1/apple"
+    };
+  }
+
+  rpc AppleList(AppleListRequest) returns (stream AppleGetResponse) {
+    option (google.api.http) = {
+      get: "/v1/apples"
+    };
+  }
+
+  rpc AppleUpdate(AppleUpdateRequest) returns (AppleUpdateResponse) {
+    option (google.api.http) = {
+      put: "/v1/apple/update"
+      body: "*"
+    };
+  }
+
+  rpc AppleDelete(AppleDeleteRequest) returns (AppleDeleteResponse) {
+    option (google.api.http) = {
+      delete: "/v1/apple/delete"
+      body: "*"
+    };
+  }
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// AppleCreate endpoint messages
+// ---------------------------------------------------------------------------------------------------------------------
+
+message AppleCreateRequest {
+  string color = 1;
+  double price = 2;
+}
+message AppleCreateResponse {
+  uint64 id = 1;
+  uint64 color_id = 2;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// AppleGet endpoint messages
+// ---------------------------------------------------------------------------------------------------------------------
+
+message AppleGetRequest {
+  uint64 id = 1;
+}
+message AppleGetResponse {
+  uint64 id = 1;
+  string color = 2;
+  double price = 3;
+  uint64 color_id = 4;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// AppleList endpoint messages
+// ---------------------------------------------------------------------------------------------------------------------
+
+message AppleListRequest {
+  SortOrder order = 1;
+  uint64 offset = 2;
+  uint64 limit = 3;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// AppleUpdate endpoint messages
+// ---------------------------------------------------------------------------------------------------------------------
+
+message AppleUpdateRequest {
+  uint64 id = 1;
+  string color = 2;
+  double price = 3;
+}
+message AppleUpdateResponse {
+  uint64 color_id = 2;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// AppleDelete endpoint messages
+// ---------------------------------------------------------------------------------------------------------------------
+
+message AppleDeleteRequest {
+  uint64 id = 1;
+}
+message AppleDeleteResponse {}
+
+// enums
+enum SortOrder {
+  UNSPECIFIED = 0;
+  SORT_ORDER_ASC = 1;
+  SORT_ORDER_DESC = 2;
+}

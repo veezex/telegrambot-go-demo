@@ -1,0 +1,7 @@
+.idea
+.vscode
+.env
+kafka_data
+.env.test
+.log
+postgresql
